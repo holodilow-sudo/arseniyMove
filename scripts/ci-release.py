@@ -31,18 +31,17 @@ def api(path):
     with urllib.request.urlopen(request, timeout=30) as response:
         return json.load(response)
 
-def prepare(ver, code, publish=False):
-    version(ver)
-    if not 1 <= code <= 2100000000:
-        raise ValueError('Invalid Android versionCode')
+def prepare(ver=None, code=None, release=False):
     manifest = ROOT / 'android/src/main/AndroidManifest.xml'
     original = manifest.read_text(encoding='utf-8')
     tree = ET.fromstring(original)
     old_version, old_code = tree.get(NS + 'versionName'), int(tree.get(NS + 'versionCode'))
-    if code < old_code or version(ver) < version(old_version):
-        raise ValueError('Version must not go backwards relative to source')
-    if publish:
+    if release:
         latest = api('/releases/latest')
+        latest_version = version(latest['tag_name'].removeprefix('v'))
+        if not ver:
+            next_patch = (*latest_version[:2], latest_version[2] + 1)
+            ver = '.'.join(map(str, max(version(old_version), next_patch)))
         if version(ver) <= version(latest['tag_name'].removeprefix('v')):
             raise ValueError('Published version must be newer than latest release')
         try:
@@ -65,13 +64,27 @@ def prepare(ver, code, publish=False):
         aapt = Path(os.environ['ANDROID_HOME']) / 'build-tools/35.0.0/aapt.exe'
         badging = subprocess.check_output([str(aapt), 'dump', 'badging', str(previous)], text=True)
         match = re.search(r"package: name='ru.arseniy.move' versionCode='(\d+)'", badging)
-        if not match or code <= int(match[1]):
+        if not match:
+            raise ValueError('Unexpected previous Android package')
+        if code is None:
+            code = max(old_code, int(match[1]) + 1)
+        if code <= int(match[1]):
             raise ValueError('Android versionCode must exceed latest release')
+    ver = ver or old_version
+    code = old_code if code is None else code
+    version(ver)
+    if not 1 <= code <= 2100000000:
+        raise ValueError('Invalid Android versionCode')
+    if code < old_code or version(ver) < version(old_version):
+        raise ValueError('Version must not go backwards relative to source')
     manifest.write_text(original.replace('versionName="' + old_version + '"', 'versionName="' + ver + '"')
                         .replace('versionCode="' + str(old_code) + '"', 'versionCode="' + str(code) + '"'), encoding='utf-8')
     ui = ROOT / 'app/app.mjs'
     ui.write_text(ui.read_text(encoding='utf-8').replace(old_version, ver), encoding='utf-8')
     print('Prepared version ' + ver + ', code ' + str(code))
+    if os.environ.get('GITHUB_OUTPUT'):
+        with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+            output.write('version=' + ver + '\n')
 
 def build():
     # Only this process sees the secret inputs. Never print their values.
@@ -124,7 +137,7 @@ def package():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(); parser.add_argument('command', choices=['prepare', 'build'])
-    parser.add_argument('--version'); parser.add_argument('--code', type=int); parser.add_argument('--publish', action='store_true')
+    parser.add_argument('--version'); parser.add_argument('--code', type=int); parser.add_argument('--release', action='store_true')
     args = parser.parse_args()
-    if args.command == 'prepare': prepare(args.version, args.code, args.publish)
+    if args.command == 'prepare': prepare(args.version, args.code, args.release)
     else: build()
