@@ -8,17 +8,13 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Версия, например 1.0.15 (пусто = из исходников)'
+        description: 'Версия (пусто = следующая после опубликованной)'
         required: false
         type: string
       version_code:
-        description: 'Код Android, например 16 (пусто = из исходников)'
+        description: 'Код Android (пусто = следующий автоматически)'
         required: false
         type: string
-      publish:
-        description: 'Опубликовать новое обновление в Releases'
-        type: boolean
-        default: false
 permissions:
   contents: read
 concurrency:
@@ -68,16 +64,12 @@ jobs:
         env:
           INPUT_VERSION: ${{ inputs.version }}
           INPUT_CODE: ${{ inputs.version_code }}
-          PUBLISH_RELEASE: ${{ github.event_name == 'workflow_dispatch' && inputs.publish }}
         run: |
-          [xml]$manifest = Get-Content android/src/main/AndroidManifest.xml
-          $ver = if ($env:INPUT_VERSION) { $env:INPUT_VERSION } else { $manifest.manifest.versionName }
-          $code = if ($env:INPUT_CODE) { $env:INPUT_CODE } else { $manifest.manifest.versionCode }
-          $arguments = @('scripts/ci-release.py', 'prepare', '--version', $ver, '--code', $code)
-          if ($env:PUBLISH_RELEASE -eq 'true') { $arguments += '--publish' }
+          $arguments = @('scripts/ci-release.py', 'prepare', '--release')
+          if ($env:INPUT_VERSION) { $arguments += @('--version', $env:INPUT_VERSION) }
+          if ($env:INPUT_CODE) { $arguments += @('--code', $env:INPUT_CODE) }
           python @arguments
           if ($LASTEXITCODE -ne 0) { throw 'Invalid release version' }
-          "version=$ver" >> $env:GITHUB_OUTPUT
       - name: Build and verify using private signing secrets
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -90,9 +82,9 @@ jobs:
           path: release-output/*
           if-no-files-found: error
           retention-days: 14
-  publish:
+  draft:
     needs: build
-    if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -102,7 +94,7 @@ jobs:
         with:
           name: ArseniyMove-${{ needs.build.outputs.version }}-${{ github.run_number }}
           path: release-output
-      - name: Publish a new stable release
+      - name: Create or refresh draft for owner approval
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -113,4 +105,17 @@ jobs:
           sha256sum -c "ArseniyMove-${RELEASE_VERSION}.apk.sha256"
           sha256sum -c "ArseniyMove-${RELEASE_VERSION}-source.zip.sha256"
           printf '%s\n\n' 'APK собран GitHub Actions и подписан прежним ключом. Устанавливайте поверх старой версии, без удаления приложения.' 'Для проверки сразу: Настройки → Проверить обновления. Установку подтверждает пользователь. Исходники и инструкция приложены. Проверка установки на физическом телефоне выполняется отдельно.' > notes.txt
-          gh release create "v${RELEASE_VERSION}" "ArseniyMove-${RELEASE_VERSION}.apk" "ArseniyMove-${RELEASE_VERSION}.apk.sha256" "ArseniyMove-${RELEASE_VERSION}-source.zip" "ArseniyMove-${RELEASE_VERSION}-source.zip.sha256" "Install-${RELEASE_VERSION}.txt" verification.json --repo "$GH_REPO" --target "$GITHUB_SHA" --title "Arseniy Move ${RELEASE_VERSION}" --notes-file notes.txt --latest
+          tag="v${RELEASE_VERSION}"
+          files=("ArseniyMove-${RELEASE_VERSION}.apk" "ArseniyMove-${RELEASE_VERSION}.apk.sha256" "ArseniyMove-${RELEASE_VERSION}-source.zip" "ArseniyMove-${RELEASE_VERSION}-source.zip.sha256" "Install-${RELEASE_VERSION}.txt" verification.json)
+          if gh release view "$tag" --repo "$GH_REPO" --json isDraft > existing.json 2>/dev/null; then
+            jq -e '.isDraft == true' existing.json >/dev/null || { echo 'Refusing to modify a published release'; exit 1; }
+            gh release upload "$tag" "${files[@]}" --repo "$GH_REPO" --clobber
+            gh release edit "$tag" --repo "$GH_REPO" --draft=true --target "$GITHUB_SHA" --title "Arseniy Move ${RELEASE_VERSION}" --notes-file notes.txt
+          else
+            gh release create "$tag" "${files[@]}" --repo "$GH_REPO" --draft --target "$GITHUB_SHA" --title "Arseniy Move ${RELEASE_VERSION}" --notes-file notes.txt
+          fi
+          gh release view "$tag" --repo "$GH_REPO" --json isDraft,url > result.json
+          jq -e '.isDraft == true' result.json >/dev/null
+          echo '## APK ready for owner approval' >> "$GITHUB_STEP_SUMMARY"
+          jq -r '.url' result.json >> "$GITHUB_STEP_SUMMARY"
+          echo 'Draft only. Publish manually after approval; phones cannot see drafts.' >> "$GITHUB_STEP_SUMMARY"
