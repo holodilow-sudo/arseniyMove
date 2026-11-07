@@ -1,0 +1,483 @@
+{
+  "version": "1.0.14",
+  "versionCode": 15,
+  "archive": "ArseniyMove-1.0.14-source.zip",
+  "sha256": "e27d9ac8f7a55ed2b2f16159bb88edba2199e522bb746695641e55f614670efb",
+  "bytes": 24338875,
+  "files": [
+    {
+      "path": "android/qa/capture-smoke.py",
+      "sha256": "1d90c651da5072afb6fa8c2f0163e76ff983c9aef477bf3a4c53d539286fbbec"
+    },
+    {
+      "path": "android/qa/check-native.py",
+      "sha256": "01d42481aaf2411116a13dea0e77b993799833c3e664271e0b192504f0f223d3"
+    },
+    {
+      "path": "android/qa/LocalAssetPathTest.java",
+      "sha256": "afea51fa8cf0c7071873c9139e5032dde6e88a90c70e66e7ac566199bc394200"
+    },
+    {
+      "path": "android/qa/ReminderTimeTest.java",
+      "sha256": "eedf5247f5215516b28d428e59560c8b19ef3605f3fa49c3655f1d10b6563b84"
+    },
+    {
+      "path": "android/qa/speech.md",
+      "sha256": "99cf5dcc6e0e04b45e7cb2ecb96c6d753b15bdc94bd09e4e6e869c04484c81cc"
+    },
+    {
+      "path": "android/qa/SpeechControllerTest.java",
+      "sha256": "383adaa02c99f6640f7e0589b0f3c298a870a480e00f8470ffee2ceb365b0b79"
+    },
+    {
+      "path": "android/qa/StartupPermissionFlowTest.java",
+      "sha256": "091d665eeb617c3a31c19fc1dc53d222e6ce584fba38485e2ec81c7ddce2d2e4"
+    },
+    {
+      "path": "android/qa/UpdatePolicyTest.java",
+      "sha256": "5de4a3885c1287831a747175eca3f1c7fa0505d87d0df538c564a7b7dcbc9d8c"
+    },
+    {
+      "path": "android/src/main/AndroidManifest.xml",
+      "sha256": "6d8ba869e7b314ee90b1635c4301676b653c49ec00ac148be06a8f3b5b171247"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/MainActivity.java",
+      "sha256": "e3214333647e09b525b99ffa60ed8c7f7c706e789e9bacbf9b0fc97f107216c2"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/ReminderReceiver.java",
+      "sha256": "98e934e3ef15daeeff64c2b28c08aee278ceb02bf42eaa6e9e0a7255cf991ddd"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/ReminderRescheduleReceiver.java",
+      "sha256": "a74dd38855956bea3fd196c93d7ff9c74638e63209d8e7991723788c3a0a04a6"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/ReminderScheduler.java",
+      "sha256": "8711689c9b8fcfb543380b4afe2f5904f26d95e8ebccc6dfb34eb3f62181e47c"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/ReminderTime.java",
+      "sha256": "c82aff0ff0ad54c67949e10b0e0fd46adf69faaf066541dd29af0c434a14b1f2"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/ResultImageProvider.java",
+      "sha256": "6b369a0646cbbe0fa1fa670e12e128327a6c399433afd19fe052124dc73cdede"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/ResultShareController.java",
+      "sha256": "f45a4301e5dd9c3902490373c4c5bf0556b1c4135d5d5b5ac22e05461e4e6fbf"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/SpeechController.java",
+      "sha256": "b490119399060b515c3ea81a1e1e928e42d05668f04a3952220283c8fad922f8"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/UpdateApkProvider.java",
+      "sha256": "2c4fcb757fb90cd5c4135825060cc4959fbaf22b10f15545851684ac7274c82f"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/UpdateController.java",
+      "sha256": "1d68e1b0c9043b091702958b3e28505b97eab2a475d7c3f4f503848a01e3bab9"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/UpdateFiles.java",
+      "sha256": "8b6e566a5fdd645de95f0fbc4680d67b1efbb122743a77736eb8685097b2a7e9"
+    },
+    {
+      "path": "android/src/main/java/ru/arseniy/move/UpdatePolicy.java",
+      "sha256": "0e1289491b3681de122a068cf47f98fdab736c28294127936a9386361e16541a"
+    },
+    {
+      "path": "android/src/main/res/drawable/ic_launcher.xml",
+      "sha256": "dbd4437dee6bd7142a64b7c648c5739c9f1028df5114df3483d19e8598bacb30"
+    },
+    {
+      "path": "android/src/main/res/drawable/ic_notification.xml",
+      "sha256": "2ba1b7451c95d6b95cafb78638482b6bb21743d8ae8b1d7ac524e81644806f49"
+    },
+    {
+      "path": "android/src/main/res/values/strings.xml",
+      "sha256": "7b063b42c6163a204081b88293dc1e85a3f2c390061772b5ad4179998b29e632"
+    },
+    {
+      "path": "android/src/main/res/values/styles.xml",
+      "sha256": "efee52c1aa2c22bcb0a8f8f26fd2cf50afac7e26fe70aabebe9101cfff78a99d"
+    },
+    {
+      "path": "android/tools/CompileAndroid.java",
+      "sha256": "9e6aff63004edaed3afee0f4adea7565ff0d88c083036b305c8ffc732a008787"
+    },
+    {
+      "path": "app/app.css",
+      "sha256": "f6d7061530229048c285cb42b5c931b704834f15074f80f284a6ef4845d87b4c"
+    },
+    {
+      "path": "app/app.mjs",
+      "sha256": "57205622798cbc0cbc09426355078da7496a76775a22348642a43114cc9f7eb3"
+    },
+    {
+      "path": "app/boat-3d.png",
+      "sha256": "8d2ceba93b29dae9753664d1f22a7e96146d2cb4c2da889931410861126b8030"
+    },
+    {
+      "path": "app/boat.svg",
+      "sha256": "fe917264fce83d5dfd6adc9c7ba34ebea2e22708e1e1b6d6ce4d12444829f34c"
+    },
+    {
+      "path": "app/camera-permission.mjs",
+      "sha256": "274b6d4f2489df96692c012e5f940b6276c5303b96eaaef37c755fdfb22a340d"
+    },
+    {
+      "path": "app/camera-stream.mjs",
+      "sha256": "1d34146629d466de810b1986885da5e155a3b06b8bab5f1bf0678ea75e3e385a"
+    },
+    {
+      "path": "app/camera.mjs",
+      "sha256": "e8587ecbc1daed19bf78fa97db5076f86d0f639e21a809439b0e8656104e9505"
+    },
+    {
+      "path": "app/exercise-art-v2.png",
+      "sha256": "3cba0b35fc2d0eb0b91acc52ad4a5e6d071aa1a6f027ef28f1801080a283b765"
+    },
+    {
+      "path": "app/hang-3d.png",
+      "sha256": "5db9bb82cb50ab09d6bb7dbcbd5f19606a1a3c5e40af7c0d760ad950dcc681e0"
+    },
+    {
+      "path": "app/hang.svg",
+      "sha256": "e3e9a86870850bdea7d1e5e8dac7f5d1757d8abeef91f474ea5942cba43685fe"
+    },
+    {
+      "path": "app/hero-sport-v2.png",
+      "sha256": "922269be12e0fd1c8f9f4f9b8ecc776a13ff2684319c00823eb9b7386341471e"
+    },
+    {
+      "path": "app/icon.svg",
+      "sha256": "eee93307bfbc407bab25273242402b427939acdfb3c9349dbf46ff8f2f152123"
+    },
+    {
+      "path": "app/index.html",
+      "sha256": "3767b22721fbfc9451651c5dc2e8be908b9dc4f030b6277c4eaec51768eefbd9"
+    },
+    {
+      "path": "app/media/pushup-poster.jpg",
+      "sha256": "059684c4d178dd3818df0600eef7f489c5f8a1b4fec82595571cda3937e30ff4"
+    },
+    {
+      "path": "app/media/pushup-technique-ru.vtt",
+      "sha256": "022d48087b1d1aee84706c126f562bccd3d120eaadd5a89aa1b25f9a9ec5c2db"
+    },
+    {
+      "path": "app/media/pushup-technique.mp4",
+      "sha256": "9738b74ec4b7e1d0949b069a62ddef1b309c0470edf4b674f9f16d87d3784240"
+    },
+    {
+      "path": "app/media/source-credit.txt",
+      "sha256": "39927c488f445cdd217206478f669f7ab621f892f01435f8b4e686f918eef69c"
+    },
+    {
+      "path": "app/pose-engine.mjs",
+      "sha256": "02e4a190875cd4a5c44ce5a77ceb5d07bb4d87890f4b932368c778b7f111679f"
+    },
+    {
+      "path": "app/progress.mjs",
+      "sha256": "77b440c4b385a4477933db882c1b41a4d601cbfc479b9c0d11a1956cd9ffd765"
+    },
+    {
+      "path": "app/report.mjs",
+      "sha256": "2175d945c0b017219164a519a761bbbe0955a06f0a8d5ea49eb4def6746e5a25"
+    },
+    {
+      "path": "app/sounds.mjs",
+      "sha256": "64ceb51d1c9167deaf8db25d33b4d60a6dffbe944ee0428474237e1e005a0124"
+    },
+    {
+      "path": "app/sport-art.svg",
+      "sha256": "235429be6755aa9ef63bfd374ed30410603d750d9217a48e053b8dce1d4cc151"
+    },
+    {
+      "path": "app/state.mjs",
+      "sha256": "ed3e25c5c664688764ddada5e4d30a75f0b2f8a100d11e305c251b300b66e792"
+    },
+    {
+      "path": "app/theme.css",
+      "sha256": "c1086657db4f3db2e75ff5b6592905e7d7a771fecc6adaaf6d9d914c0f5307bc"
+    },
+    {
+      "path": "app/updates.mjs",
+      "sha256": "af140e80e60a30be0f889e24f6bc6e94f587c6140db6097a86a25d25195ed3f7"
+    },
+    {
+      "path": "app/vendor/LICENSE-mediapipe.txt",
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8"
+    },
+    {
+      "path": "app/vendor/package.json",
+      "sha256": "ed8a115ed6a703014465111bfe5f7321a94769dc19f6eb7936ece7ae6a8c8c1e"
+    },
+    {
+      "path": "app/vendor/pose_landmarker_lite.task",
+      "sha256": "59929e1d1ee95287735ddd833b19cf4ac46d29bc7afddbbf6753c459690d574a"
+    },
+    {
+      "path": "app/vendor/README.md",
+      "sha256": "8326ed0beb1983b69cccb190937c2e368388969cb3ade06010fe51e0d5339308"
+    },
+    {
+      "path": "app/vendor/vision_bundle.mjs",
+      "sha256": "a84921e02321e582484c1f8126d344b5f33b791fa09c640a52e20ee8632068f1"
+    },
+    {
+      "path": "app/vendor/wasm/vision_wasm_internal.js",
+      "sha256": "6522286aa32dd93eff17c3da002b0649516f87abfec7a80b5bfe5c9625caa5f8"
+    },
+    {
+      "path": "app/vendor/wasm/vision_wasm_internal.wasm",
+      "sha256": "0e101a010e262ef8e78f22e3c95b60a9705fd06962753c9acd6356d9fb56b7bd"
+    },
+    {
+      "path": "app/vendor/wasm/vision_wasm_module_internal.js",
+      "sha256": "539a4386fd12d0723d6e900ec80467d168ba7290dda2f79e77a2181b8e906115"
+    },
+    {
+      "path": "app/vendor/wasm/vision_wasm_module_internal.wasm",
+      "sha256": "3b57e4b55ac6346bf940212e3e11250b308a6a474077385e2f527b119cf74525"
+    },
+    {
+      "path": "app/vendor/wasm/vision_wasm_nosimd_internal.js",
+      "sha256": "942654dbdcebce08ea039af23d18e58bebf23c8607d74023d2df7071c8a7b638"
+    },
+    {
+      "path": "app/vendor/wasm/vision_wasm_nosimd_internal.wasm",
+      "sha256": "c9b1b69bb87baf9e529254d8559dcbcf4c5a9c0eda84f56a12f17d675335ec9c"
+    },
+    {
+      "path": "app/vision-worker.mjs",
+      "sha256": "31082bf55d0dd94448774a3a5db1de48cdcd5e77215dab61af39546f8ec76583"
+    },
+    {
+      "path": "app/voice-count.mjs",
+      "sha256": "179f5fa9e0a4f45fa2e703b0ef123d051f24e57e42abd95fa67fa8a950fef263"
+    },
+    {
+      "path": "BUILDING.md",
+      "sha256": "354155152586c34737a2bae76766daf94c70fd944eeb22a710c977a6b49e39e3"
+    },
+    {
+      "path": "docs/android-build.md",
+      "sha256": "95f468c31052767ad438c433ad2fc903906134c25682a50360bf3732089de147"
+    },
+    {
+      "path": "docs/android.md",
+      "sha256": "59f99b796e9a7515bf55f5c835fdf5263ef842dfc3fd3dd6bc46534e2ee86b4e"
+    },
+    {
+      "path": "docs/camera-1.0.2.md",
+      "sha256": "b2636a5d3854fd13c82d4334fdbcfd8ad486f37c89303f0f8beb78eb91505265"
+    },
+    {
+      "path": "docs/design-qa.md",
+      "sha256": "e9521ce8da86573b7babe756a79e92ce6e0f4bc09b218f9c96c83fd5ac3cfb4f"
+    },
+    {
+      "path": "docs/exercise-art.md",
+      "sha256": "8992e0336ca6fcfe13f8de959bf1df7d32e75d227271b5bc10e9f33f2d64a310"
+    },
+    {
+      "path": "docs/hero-art.md",
+      "sha256": "b31b9f9b3ad66b866a799bb98b575009fe8996746feb4e648fd66f84d265d0ee"
+    },
+    {
+      "path": "docs/pushup-video-source.json",
+      "sha256": "24c7347f4c107356d4ea2c50139e022864ca3063403cb18cba2872b3c55659b4"
+    },
+    {
+      "path": "docs/tracking.md",
+      "sha256": "b7fe7618bc58494f1b8a5cdb9a35a661b26c0176383dd31bd3e8c4b19c67fbf6"
+    },
+    {
+      "path": "docs/vision-assets.json",
+      "sha256": "c622ef4df65e58cf85ddb2e410a285c1d02c4e887f6797867ac601d9cc2ce9ee"
+    },
+    {
+      "path": "parent-dashboard/dashboard.css",
+      "sha256": "b4358ea9d30fe004581eaa422753909468476a4b9781e1a9ae60ac3e4324e163"
+    },
+    {
+      "path": "parent-dashboard/dashboard.mjs",
+      "sha256": "d140ee55d5818df7b8f002566b7aed7911ed5387b2037b8e6723d3004a109bca"
+    },
+    {
+      "path": "parent-dashboard/data.mjs",
+      "sha256": "a979268043442c0fcc66373e58bd329bbe04766e752782d2772a105e20317938"
+    },
+    {
+      "path": "parent-dashboard/index.html",
+      "sha256": "d9a7649ce0bc4c83dcdd6df7cc0d75cbf6a22da5f8806e8460eacc7339fdb7ad"
+    },
+    {
+      "path": "parent-dashboard/latest.json",
+      "sha256": "3e592221a69b93a3db6c7d0265bd350ad90dc487ad8cc73580c617682f6c8cd3"
+    },
+    {
+      "path": "parent-dashboard/README.md",
+      "sha256": "fa5727c7a9832af27785ce5ff0bdc80419e1ebe55f3c831fdfa5ea26eaa3c2ff"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7d1e0d6a9e2697a78e16ed9f09df2cadabc19024c7c4fcf8e5de6fa35e6ddaa3"
+    },
+    {
+      "path": "scripts/assemble-preview.py",
+      "sha256": "387a095a97617d12d936ad8c90c85825b96eaaca2e617701dca915940f551bb0"
+    },
+    {
+      "path": "scripts/boat-ui-qa.cjs",
+      "sha256": "2b4caf93ee5c0f7617d356a3512e69ea3fce3bea547862eeae21d42f56003b14"
+    },
+    {
+      "path": "scripts/browser-qa.cjs",
+      "sha256": "8ca337d429fb7a8e5bb1d6fdf9b1f61e6c6dfa667938dbfb3b88023c6f4888d9"
+    },
+    {
+      "path": "scripts/build-android.py",
+      "sha256": "92ce4a4d3ff30d6b8496ac27d84886d20ab2e639f9f6ec094374a32ba6fa6737"
+    },
+    {
+      "path": "scripts/camera-engine-qa.cjs",
+      "sha256": "e87423283722a33c916cc092eab562e15bd10e3c483f107fb1008826846dad23"
+    },
+    {
+      "path": "scripts/camera-permission-qa.cjs",
+      "sha256": "05ed68c448696e117642fdd55b95dc65effd33202232fe7cb20e9069ae604f34"
+    },
+    {
+      "path": "scripts/camera-pipeline-qa.mjs",
+      "sha256": "05fe0b29bef6cf9ed0fd4f3bdf912f4f9572eb00c07c9f04c9045bae8f4d0a77"
+    },
+    {
+      "path": "scripts/camera-stream-qa.mjs",
+      "sha256": "8e7b44284ed44f9bd73d7f4ae471a062f16b69c63b5f755bebc48f350e3ad40d"
+    },
+    {
+      "path": "scripts/camera-ui-qa.cjs",
+      "sha256": "bcbd0e6e1b716aa15f8ec026d18877c3e26ca21e88c689b3fa15be33f4a08749"
+    },
+    {
+      "path": "scripts/capture-permissions.cjs",
+      "sha256": "f746b8037c34c97d7eddc80757424d929c2bde0cf59a68ee800461e52a11ed9e"
+    },
+    {
+      "path": "scripts/capture-preparation.cjs",
+      "sha256": "45b5db1765b0742b318b362213e30f5360ad853632f5852c75fe4e004f289049"
+    },
+    {
+      "path": "scripts/capture-preview.cjs",
+      "sha256": "83eef482cba8f4a2e4bedcf9fd1f95436da15fb655f9c1de8a2c90e727d2f1b1"
+    },
+    {
+      "path": "scripts/capture-update.cjs",
+      "sha256": "798c3dfb9323dd7ca6cbaf14946148fc62becaf9a76370dd808709fd893109da"
+    },
+    {
+      "path": "scripts/check-skin.cjs",
+      "sha256": "231b328ccdc9ca31308b85054b2415225fc1b3a225c9927e279296b2d380a6a3"
+    },
+    {
+      "path": "scripts/check-update-feed.py",
+      "sha256": "f0a7e128e806aa2098d9548658f28417ee851e0d6b13028c72e1edf613fdd313"
+    },
+    {
+      "path": "scripts/fetch-pushup-video.py",
+      "sha256": "f6fd76dd19d2908c8c390868da60cd1909b5ceaa65a8b58d3c79a67852c623a0"
+    },
+    {
+      "path": "scripts/fetch-vision.py",
+      "sha256": "d9c85e1f4a67162ee970f7d2fe95d8048add28b586e456cca82f82baaadfbada"
+    },
+    {
+      "path": "scripts/free-count-ui-qa.cjs",
+      "sha256": "967e1f42d5dedfaadb76acb47feba26828d717591930030625edac66ee9aa882"
+    },
+    {
+      "path": "scripts/hang-ui-qa.cjs",
+      "sha256": "d93cb3cfa61c2588d00173fbd472a8547fba972d5069a8c027f16ad7e0a97925"
+    },
+    {
+      "path": "scripts/parent-dashboard-test.mjs",
+      "sha256": "f97f64e940d328a353b1567332cbac8c06e25bc1040a703c637e7bb75fbbca38"
+    },
+    {
+      "path": "scripts/progress-ui-qa.cjs",
+      "sha256": "a127f85430294bf2538fd3de643b8a785257e567de190defce8470689958a4c7"
+    },
+    {
+      "path": "scripts/pushup-video-qa.cjs",
+      "sha256": "7fe08f024668a8516ff82a9e40658c65acc111e4db04b7e62aba0685995e866e"
+    },
+    {
+      "path": "scripts/reminders-preview.cjs",
+      "sha256": "ac595de32b096275c553dc081589801c4b9c799429bbb47e37630c6dc43864b2"
+    },
+    {
+      "path": "scripts/serve.py",
+      "sha256": "34f0a62e3f26d1357547ebdc4ed016408986ab8f659e566f6ff1d8c80de6ced2"
+    },
+    {
+      "path": "scripts/share-qa.cjs",
+      "sha256": "f4c92c08c894db613d834928aa46cb24665805fc19ec11af588bc679d47f7db5"
+    },
+    {
+      "path": "scripts/test-boat.mjs",
+      "sha256": "883e8728430b304e12ac8ca9f5bcc8f05db0cc38078da4e34b4aa77b66035f22"
+    },
+    {
+      "path": "scripts/test-hang.mjs",
+      "sha256": "6a03345b24b68d5e55978af0b9ab950adb67f11535fb6aff84f8ae7d70222931"
+    },
+    {
+      "path": "scripts/test-pose-engine.mjs",
+      "sha256": "0236ad2d01e055e5e0f91bd1d8a452042f238fc84abeb2f3181138859ef2781b"
+    },
+    {
+      "path": "scripts/test-progress.mjs",
+      "sha256": "c9eaf4ff25b7e7753fb8d3c1f369ad1d7bd78c18ac9dba7038f5d2a9e1cda8b6"
+    },
+    {
+      "path": "scripts/test-state.mjs",
+      "sha256": "025f71170b211de80e7847a863e45afe45e229fb4d30f47b1086cdaae2f08fc3"
+    },
+    {
+      "path": "scripts/test-voice-count.mjs",
+      "sha256": "bd5cba1e47d5d523631e3d2fc46f573786ae8028a79254da7855f5fd277baeff"
+    },
+    {
+      "path": "scripts/tracking-ui-qa.cjs",
+      "sha256": "85281c0cafe8c702f0e8502b8ad1bb11deef44731582b820607e70defa71cbeb"
+    },
+    {
+      "path": "scripts/tutorial-qa.cjs",
+      "sha256": "d5b4e7c571131657116c95ce88f54fb12364918170b752776d8f3339a37c23f3"
+    },
+    {
+      "path": "scripts/update-ui-qa.cjs",
+      "sha256": "ae1723458c43545aff5b6a59807674c1b24a8842a5d54f76bbf3e914d2327e55"
+    },
+    {
+      "path": "scripts/verify-move-apk.py",
+      "sha256": "cc522b5624539172f6409348be494fd9d874491a6da49c58469331b65f163082"
+    },
+    {
+      "path": "scripts/voice-count-ui-qa.cjs",
+      "sha256": "beb93c639921d45525c7b08504a4f5f4686879ca0f2d53963e66d6b902620abd"
+    }
+  ],
+  "excluded": [
+    "private signing key and password",
+    "local builds and logs",
+    "SDK/JDK binaries",
+    "cancelled statistics integration"
+  ]
+}
