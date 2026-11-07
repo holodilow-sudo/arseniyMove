@@ -12,3 +12,7 @@ Android-приложение для тренировок Арсения. Тек�
 Обновления читаются из публичных GitHub Releases без входа и ключей на телефоне. Приложение скачивает новую версию при открытии, установку подтверждает пользователь. Для версии 1.0.11 и старее один раз установите новый APK поверх прежнего, без удаления и очистки данных.
 
 В 1.0.14 функции тренировок совпадают с 1.0.13, повышен номер версии. Автоматическая отправка статистики не подключена.
+
+## Build and release
+
+[GitHub Actions: automatic APK builds and releases](CI.md). [Local build instructions](BUILDING.md). Source folders are app/, android/, scripts/ and docs/. Signing credentials are private GitHub Secrets and are never committed.

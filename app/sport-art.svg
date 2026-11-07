@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 600" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Арсений в движении</title>
+  <desc id="desc">Оригинальная спортивная иллюстрация: юный бегущий атлет, линии площадки и яркие дуги движения.</desc>
+  <defs>
+    <linearGradient id="shirt" x1="287" y1="177" x2="373" y2="342" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF9EB"/><stop offset=".55" stop-color="#EBE7D9"/><stop offset="1" stop-color="#A9B6B3"/></linearGradient>
+    <linearGradient id="skin" x1="313" y1="119" x2="375" y2="239" gradientUnits="userSpaceOnUse"><stop stop-color="#E6B99A"/><stop offset="1" stop-color="#B98268"/></linearGradient>
+    <linearGradient id="leg" x1="314" y1="330" x2="369" y2="472" gradientUnits="userSpaceOnUse"><stop stop-color="#C7977E"/><stop offset="1" stop-color="#E6BC9C"/></linearGradient>
+    <linearGradient id="shorts" x1="296" y1="291" x2="381" y2="371" gradientUnits="userSpaceOnUse"><stop stop-color="#394A55"/><stop offset="1" stop-color="#142833"/></linearGradient>
+    <linearGradient id="shoe" x1="337" y1="471" x2="413" y2="486" gradientUnits="userSpaceOnUse"><stop stop-color="#EBFF9B"/><stop offset=".52" stop-color="#C6F63D"/><stop offset="1" stop-color="#8EB922"/></linearGradient>
+    <linearGradient id="court" x1="259" y1="426" x2="344" y2="596" gradientUnits="userSpaceOnUse"><stop stop-color="#83B8B8" stop-opacity=".28"/><stop offset="1" stop-color="#83B8B8" stop-opacity="0"/></linearGradient>
+    <linearGradient id="arc" x1="124" y1="181" x2="502" y2="426" gradientUnits="userSpaceOnUse"><stop stop-color="#D5FF61" stop-opacity="0"/><stop offset=".45" stop-color="#D5FF61"/><stop offset="1" stop-color="#D5FF61" stop-opacity="0"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#C8FF57" stop-opacity=".14"/><stop offset="1" stop-color="#C8FF57" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-40%" y="-90%" width="180%" height="280%"><feGaussianBlur stdDeviation="10"/></filter>
+  </defs>
+  <!-- A translucent court and oversized track arc supply depth without a boxed image. -->
+  <circle cx="343" cy="286" r="249" fill="url(#glow)"/>
+  <path d="M38 538 265 415h197l98 159H40Z" fill="url(#court)"/>
+  <g stroke="#A8D4CD" stroke-opacity=".19" stroke-width="1.5">
+    <path d="m64 559 230-138M160 585l155-164M276 600l62-179M396 600l-40-179M520 600 383 421"/>
+    <path d="M170 465h326M100 506h426M38 548h516M0 593h560"/>
+    <ellipse cx="339" cy="500" rx="114" ry="36"/>
+    <ellipse cx="339" cy="500" rx="47" ry="15"/>
+  </g>
+  <path d="M121 377C61 242 137 91 303 74c157-16 250 122 225 264" stroke="#B9D3C2" stroke-opacity=".13" stroke-width="2"/>
+  <path d="M127 374C70 247 140 109 300 91c147-17 235 114 210 246" stroke="url(#arc)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M508 339c-17 80-87 138-169 140" stroke="#FF9B59" stroke-opacity=".75" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 12"/>
+  <path d="m122 377-9-31 29 18" stroke="#D5FF61" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g stroke="#E1F8C1" stroke-linecap="round">
+    <path d="M183 165h35M199 148v35" opacity=".4" stroke-width="2"/>
+    <path d="M449 412h20M459 402v20" opacity=".5" stroke-width="2"/>
+    <path d="m203 369-33 15M206 382l-22 10" opacity=".45" stroke-width="3"/>
+  </g>
+  <circle cx="494" cy="189" r="5" fill="#D8FF69"/>
+  <circle cx="169" cy="278" r="3" fill="#FFC89B"/>
+  <circle cx="450" cy="69" r="4" fill="#F7ECD3" opacity=".7"/>
+  <ellipse cx="341" cy="519" rx="103" ry="16" fill="#040B12" opacity=".65" filter="url(#shadow)"/>
+  <!-- Rear arm and rear leg, kept separate from the front silhouette. -->
+  <path d="M366 201c14 2 25 11 29 25l12 37 29-10 9 17-41 23c-10 5-19 1-24-8l-27-52Z" fill="#A77763"/>
+  <path d="m436 253 15-13 14 2 8 9-7 14-21 6Z" fill="#D7A88A"/>
+  <path d="m363 323 60 37 33-44 18 13-38 65c-5 9-15 9-23 4l-69-39Z" fill="#B68872"/>
+  <path d="m453 321 12-23 19 8-11 24Z" fill="#EAE8D9"/>
+  <path d="m462 296 9-18c5-8 13-9 19-5l22 17c5 4 4 10-1 13l-33 13-17-9Z" fill="#F9AF6B"/>
+  <path d="m477 311 34-13c5-1 7 5 2 8l-31 15-13-4Z" fill="#F2E6D0"/>
+  <path d="m480 282 12 9M474 288l12 9" stroke="#743C31" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Athletic shorts and the long forward stride. -->
+  <path d="m299 291 70-1 22 37-23 47-34-18-4-13-22 32-42-23Z" fill="url(#shorts)"/>
+  <path d="m315 304-20 44M359 304l-14 43" stroke="#75838A" stroke-opacity=".5" stroke-width="2"/>
+  <path d="m276 348 28 14-26 39 69 54-13 19-91-57c-10-6-12-15-6-24Z" fill="url(#leg)"/>
+  <path d="m300 362-18 34 14 12" stroke="#AC7C67" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
+  <path d="m335 450 19 15-13 20-19-15Z" fill="#F1E9D8"/>
+  <path d="m326 467 19 13 24-8 12 8 27 3c10 1 17 6 17 11l-7 7-80-3-24-16Z" fill="url(#shoe)"/>
+  <path d="m318 486 21 11 80 1 8 5-6 7-85-4-25-13Z" fill="#F1F4D6"/>
+  <path d="m346 483 19 11M357 479l18 12M369 479l18 11" stroke="#416122" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="m389 488 18 1" stroke="#FAFFE9" stroke-width="4" stroke-linecap="round"/>
+  <!-- Off-white running shirt, with an original diagonal club stripe. -->
+  <path d="M315 174 351 170l25 22 9 45-16 58-69 11-14-24 2-57-14-18Z" fill="url(#shirt)"/>
+  <path d="m315 175 10 15 17 4 15-20" fill="#102732"/>
+  <path d="m290 232 15 53 63-8-7 17-61 12-14-24Z" fill="#AAB5B0" opacity=".5"/>
+  <path d="m286 216 18-13 67 30-5 22Z" fill="#CFF55B"/>
+  <path d="m289 221 79 34" stroke="#66873D" stroke-opacity=".45" stroke-width="2"/>
+  <path d="m330 274 30-4M327 280l21-2" stroke="#667E77" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <path d="m367 196 9 41-11 29" stroke="#F8F7EA" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+  <!-- Front arm reaches forward: a relaxed, active pose. -->
+  <path d="m294 198-21 12-18 38-31-31-16 15 38 47c8 9 18 7 25-2l32-45Z" fill="url(#skin)"/>
+  <path d="m294 191 17 23-15 27-28-20 6-14Z" fill="#F4F0E2"/>
+  <path d="m222 217-2-14-12-11-10 1-8 12 3 11 17 17Z" fill="#DCB096"/>
+  <path d="m196 198 12 10M193 205l12 9" stroke="#A87862" stroke-width="2" stroke-linecap="round"/>
+  <path d="m222 220-10 11" stroke="#152F39" stroke-width="9"/>
+  <path d="m219 223-6 6" stroke="#DBF673" stroke-width="3"/>
+  <!-- Face is intentionally graphic and anonymous, not a realistic portrait. -->
+  <path d="m326 159-4 21 14 12 17-12-5-24Z" fill="#BB8D74"/>
+  <path d="M315 117c7-15 26-21 43-13 13 6 18 20 13 34l-7 22-17 15-20-6-13-20Z" fill="url(#skin)"/>
+  <path d="m366 136 7 10-10 4" fill="#E6B79A"/>
+  <path d="M313 143c-9-16-9-34 1-44 12-15 37-19 53-5 8 6 11 16 9 24l-14-1-7-9-7 14-22-1-4 25Z" fill="#152633"/>
+  <path d="m315 106 20-10 18 4" stroke="#314452" stroke-width="4" stroke-linecap="round"/>
+  <path d="m356 136 7 1" stroke="#27343A" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="m349 156 9-1" stroke="#95624F" stroke-width="2" stroke-linecap="round"/>
+  <path d="M321 137c-10-4-14 4-8 11l7 4" fill="#CB9B80"/>
+  <path d="m316 142 4 3" stroke="#9A6B57" stroke-width="2" stroke-linecap="round"/>
+  <path d="m352 167 11-8" stroke="#A87560" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
+  <!-- Floating court markers tie the athlete to the app's counters. -->
+  <g transform="rotate(9 465 108)">
+    <rect x="438" y="82" width="55" height="55" rx="15" fill="#253B40" stroke="#D6F88C" stroke-opacity=".5"/>
+    <path d="m466 94-11 19h10l-3 13 14-20h-11Z" fill="#D7FF64"/>
+  </g>
+  <g transform="rotate(-10 220 457)">
+    <rect x="193" y="434" width="54" height="45" rx="12" fill="#2B333A" stroke="#E8AB78" stroke-opacity=".7"/>
+    <path d="m207 458 8 8 18-20" stroke="#FFB57C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

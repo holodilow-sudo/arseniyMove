@@ -1,0 +1,9 @@
+android/.signing/
+build/
+dist/
+work/
+.toolchain/
+node_modules/
+__pycache__/
+release-output/
+.env*

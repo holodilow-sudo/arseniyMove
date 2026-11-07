@@ -1,0 +1,25 @@
+{
+  "title": "Culture of Fitness: Push Ups",
+  "author": "Defense Media Activity — Air Force",
+  "creators": [
+    "Travis Burcham",
+    "Elijah Dority",
+    "Joshua DuFrane"
+  ],
+  "sourcePage": "https://www.dvidshub.net/video/1016258/culture-fitness-push-ups",
+  "publicPlaybackSource": "https://d34w7g4gy10iej.cloudfront.net/video/2607/DOD_111863274/DOD_111863274.mp4",
+  "license": "Public domain (DVIDS source page)",
+  "rightsURL": "https://www.dvidshub.net/about/copyright",
+  "sourceSha256": "3a4c255a64bb62833a64e2a8b44c0eb3249c8ff84208a80ea2174979f4a90522",
+  "assetSha256": "9738b74ec4b7e1d0949b069a62ddef1b309c0470edf4b674f9f16d87d3784240",
+  "bytes": 3354782,
+  "durationSeconds": 30,
+  "sourceExcerptSeconds": [
+    6,
+    36
+  ],
+  "videoResolution": "960x540",
+  "adaptation": "30-second excerpt with original English audio and separately authored Russian technique captions. Cropped in time only; no speed changes. Exam rules and time limits outside this excerpt are not app instructions.",
+  "narration": "Original English audio. Russian narration was not produced; local SAPI voice failed.",
+  "notice": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement."
+}

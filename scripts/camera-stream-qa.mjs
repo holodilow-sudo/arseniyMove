@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import {writeFileSync} from 'node:fs';
+import {openCamera,playCamera} from '../app/camera-stream.mjs';
+const checks=[];
+async function test(name,fn){try{await fn();checks.push({name,passed:true});console.log('PASS '+name);}catch(error){checks.push({name,passed:false,error:String(error.stack)});console.error('FAIL '+name,error);}}
+const tick=()=>new Promise(resolve=>setImmediate(resolve));
+const err=name=>Object.assign(new Error(name),{name});
+const outcome=p=>p.then(value=>({value}),error=>({error}));
+
+await test('A normal camera uses soft constraints and no microphone',async()=>{let options;const stream={};assert.equal(await openCamera({mediaDevices:{getUserMedia:async o=>(options=o,stream)}}),stream);assert.equal(options.audio,false);assert.equal(options.video.frameRate.ideal,15);assert.equal(options.video.frameRate.max,undefined);assert.equal(options.video.facingMode.ideal,'user');});
+await test('Unsupported resolution recovers using a facing-only profile',async()=>{const calls=[],stream={};const actual=await openCamera({mediaDevices:{getUserMedia:async o=>{calls.push(o);if(calls.length===1)throw err('OverconstrainedError');return stream;}},facing:'environment'});assert.equal(actual,stream);assert.deepEqual(calls[1],{audio:false,video:{facingMode:{ideal:'environment'}}});});
+await test('Missing selected camera falls back to the device default',async()=>{const calls=[],stream={};const actual=await openCamera({mediaDevices:{getUserMedia:async o=>{calls.push(o);if(calls.length<3)throw err('NotFoundError');return stream;}}});assert.equal(actual,stream);assert.deepEqual(calls[2],{audio:false,video:true});});
+await test('Busy hardware is bounded to three profiles and still reports the real error',async()=>{let calls=0;const r=await outcome(openCamera({mediaDevices:{getUserMedia:async()=>{calls++;throw err('NotReadableError');}}}));assert.equal(calls,3);assert.equal(r.error.name,'NotReadableError');});
+await test('Permission denial is never bypassed by retrying another profile',async()=>{let calls=0;const r=await outcome(openCamera({mediaDevices:{getUserMedia:async()=>{calls++;throw err('NotAllowedError');}}}));assert.equal(calls,1);assert.equal(r.error.name,'NotAllowedError');});
+await test('Timed-out requests do not race another capture and close a late stream',async()=>{let resolve,calls=0,stops=0;const r=await outcome(openCamera({mediaDevices:{getUserMedia:()=>{calls++;return new Promise(r=>resolve=r);}},timeoutMs:15}));assert.equal(r.error.code,'CAPTURE_TIMEOUT');assert.equal(calls,1);resolve({getTracks:()=>[{stop:()=>stops++}]});await tick();assert.equal(stops,1);});
+await test('Abort returns immediately and closes a late camera stream',async()=>{const controller=new AbortController();let resolve,stops=0;const pending=outcome(openCamera({signal:controller.signal,mediaDevices:{getUserMedia:()=>new Promise(r=>resolve=r)}}));await tick();controller.abort();assert.equal((await pending).error.name,'AbortError');resolve({getTracks:()=>[{stop:()=>stops++}]});await tick();assert.equal(stops,1);});
+await test('Aborting before the capture microtask never opens hardware',async()=>{const controller=new AbortController();let calls=0;const pending=outcome(openCamera({signal:controller.signal,mediaDevices:{getUserMedia:()=>{calls++;}}}));controller.abort();assert.equal((await pending).error.name,'AbortError');assert.equal(calls,0);});
+await test('An aborted request never retries after rejection',async()=>{const controller=new AbortController();let reject,calls=0;const pending=outcome(openCamera({signal:controller.signal,mediaDevices:{getUserMedia:()=>{calls++;return new Promise((_,r)=>reject=r);}}}));await tick();controller.abort();reject(err('NotReadableError'));await pending;await tick();assert.equal(calls,1);});
+await test('Preview explicitly enables muted inline playback',async()=>{const video={play:async()=>{assert.equal(video.muted,true);assert.equal(video.autoplay,true);assert.equal(video.playsInline,true);}};await playCamera(video);});
+await test('A hung preview times out with a separate diagnostic',async()=>{const r=await outcome(playCamera({play:()=>new Promise(()=>{})},{timeoutMs:15}));assert.equal(r.error.code,'PREVIEW_TIMEOUT');});
+await test('Leaving the screen cancels a hung preview',async()=>{const controller=new AbortController();const pending=outcome(playCamera({play:()=>new Promise(()=>{})},{signal:controller.signal}));await tick();controller.abort();assert.equal((await pending).error.name,'AbortError');});
+const report={passed:checks.every(t=>t.passed),checks:checks.length,results:checks,realCameraAccessed:false,checkedAt:new Date().toISOString()};
+writeFileSync(new URL('../docs/camera-stream-qa.json',import.meta.url),JSON.stringify(report,null,2));
+if(!report.passed)process.exitCode=1;

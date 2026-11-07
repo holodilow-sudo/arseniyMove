@@ -1,0 +1,34 @@
+# Exercise-card artwork v2
+
+- Final asset: `app/exercise-art-v2.png`.
+- Mode: built-in `image_gen`, one cohesive raster atlas, followed by one targeted layout edit through the same tool. No CLI/API key and no Python image editing/cropping.
+- Original generation: `C:/Users/илья/.codex/generated_images/01a147a4-5caa-7663-a97e-7c834ce4ece8/exec-535ddad8-3364-40a6-a344-05f84245fe93.png`.
+- Selected final source: `C:/Users/илья/.codex/generated_images/01a147a4-5caa-7663-a97e-7c834ce4ece8/exec-bcde6538-7c20-4953-9533-140fef31d930.png` (original retained).
+- Equal 2×2 cells: top-left push-up, top-right squat, bottom-left forearm plank, bottom-right pull-up. Use full atlas at background-size 200% 200% and positions 0 0 / 100% 0 / 0 100% / 100% 100% on a square art window.
+- Genuine RGBA transparency preserved, 1254 × 1254 pixels. Read-only alpha inspection found a maximum alpha of 1/255 along both exact central dividing lines (negligible generated edge noise); no visible body part crosses into another CSS cell.
+- Visual inspection: four complete isolated fictional teenagers in matching navy/lime sportswear; no labels, brands or grid; pull-up frame and all limbs remain visible. These are decorative card illustrations, not authoritative technique instruction. The first generation crossed a row boundary; the targeted edit corrected that before selection.
+- No CSS/JavaScript changes or APK build in this task.
+
+## Original generation prompt
+
+```text
+Use case: stylized-concept.
+Asset type: ONE square transparent-background raster sprite atlas for four exercise cards in a teen fitness app. This is one cohesive 2-by-2 atlas, not four separate images. Exact equal quadrants: top-left push-up; top-right squat; bottom-left forearm plank; bottom-right pull-up. No grid lines, frames, captions, lettering, numbers or watermark. Keep the entire background genuinely transparent, including the center gaps and the outside margins.
+Shared art direction: the same fictional boy aged 13–15 in every quadrant, normal healthy youthful athletic build, friendly youthful face and slightly tousled short brown hair. Fully clothed in a matte deep-navy sports T-shirt with bright lime shoulder/side accents, navy athletic shorts and detailed white/lime/orange running shoes. Polished cinematic stylized 3D sports videogame promotional illustration, carefully modeled anatomy and tactile fabric, refined golden key light and soft cyan fill, matte sophisticated finish. Similar visual quality to a premium videogame hero render, neither flat vector nor a tiny stick figure. No bodybuilder muscles, no logos or brands.
+Precise composition: strict equal 2x2 cells. Each complete isolated exercise scene must stay entirely within its own quadrant, with at least 8 percent of that quadrant's width and height left clear around the scene. Keep subjects centered in their respective cells; no limb, shoe, support, shadow or bar may cross the central horizontal or vertical divide. All four figures are shown head-to-toe, no cropped limbs. The four scenes share consistent character proportions, render quality and light direction. Soft compact contact shadows are allowed on transparency; no background city or scenery, no solid floor rectangle, no decorative shapes.
+TOP LEFT: clear side view of a push-up position. Palms flat on the ground under the shoulders, arms only slightly bent, straight body from shoulders through hips to ankles, toes on the ground, head aligned with spine. Entire body and both shoes fit in this cell. No exercise equipment.
+TOP RIGHT: clear three-quarter side view of a bodyweight squat, feet planted, hips moving back and down, knees bent, torso naturally inclined, arms forward for balance. Entire person is visible inside this cell. No weights or equipment.
+BOTTOM LEFT: clear side view of a FOREARM plank, both forearms and elbows resting on the ground, elbows under shoulders, straight body from shoulders to ankles, toes on the ground, neck neutral. Distinctly different arm support from the top-left push-up. Entire body and both shoes fit inside the cell.
+BOTTOM RIGHT: the same teen at the upper phase of a pull-up on a simple compact freestanding low pull-up frame; both hands visibly grip the horizontal bar above, bent elbows pull the body upward, chin just above bar, knees gently bent with feet free of the floor. Show the COMPLETE simple pull-up frame, including both uprights and stable feet, as well as the person's entire body. Frame and figure must fit in the bottom-right quadrant with clear margins. Anatomically plausible pose and plausible apparatus, no dangling extra bars.
+Constraints: these are attractive decorative exercise-card illustrations, not a labelled instructional diagram. Exactly four isolated scenes, one per equal quadrant, one fictional fully-clothed teenager per scene, physically plausible limbs and hands, genuine transparent background, no text at all.
+```
+
+## Final targeted layout-edit prompt
+
+```text
+Use case: precise-object-edit. Edit target: the attached transparent exercise atlas. Change ONLY the layout and scale of its existing four isolated scenes; preserve the exact teenager, clothing, poses, equipment, rendering style, lighting and transparent background.
+Critical correction: this must be a mechanically usable 2x2 equal-cell sprite atlas. The current pull-up boy's head crosses into the top-right quadrant. Re-layout all four scenes into four NON-OVERLAPPING equal quadrants on a square canvas. Every scene, including all equipment, hair, limbs, shoes and shadow, must sit safely inside its own quarter with wide transparent margins. The central horizontal band from y=46% to y=54% and central vertical band from x=46% to x=54% MUST be completely empty transparent pixels. Also keep the outermost 4% of the whole canvas transparent on every edge.
+Put the complete top-left push-up scene inside bounding rectangle x=4–46%, y=4–46%, centered. Put the complete top-right squat scene inside x=54–96%, y=4–46%, centered. Put the complete bottom-left forearm plank scene inside x=4–46%, y=54–96%, centered. Put the complete bottom-right pull-up scene including the entire freestanding frame inside x=54–96%, y=54–96%, centered. Scale the pull-up scene down enough that its head begins BELOW y=54% and its feet/frame end ABOVE y=96%. Preserve scene aspect ratios. Do not enlarge figures to fill outside these rectangles. Transparent spacing is intentionally required for CSS sprite usage. The two horizontal-body scenes can have larger empty space above and below, while remaining centered inside their cells.
+No cropping any body parts or equipment. No additional characters, no captions, no visible grid or bounding boxes. Genuine transparent background throughout, no solid fill. Retain all four attractive 3D scenes unchanged apart from shrinking and repositioning as needed.
+```
+
