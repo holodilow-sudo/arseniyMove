@@ -1,0 +1,32 @@
+name: Import source tree once
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  import:
+    if: github.repository == 'holodilow-sudo/arseniyMove' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Unpack verified source tree without credentials
+        run: |
+          python - <<'PY'
+          from pathlib import Path, PurePosixPath
+          import hashlib, zipfile
+          assert not Path('app/app.mjs').exists(), 'Sources already imported'
+          archive = Path('CI-SOURCE-BOOTSTRAP.zip')
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == 'bd4e1117ed88aba68039dbf6757b0ea90aee324bab36d2abad6631847b692303'
+          with zipfile.ZipFile(archive) as z:
+              for name in z.namelist():
+                  p = PurePosixPath(name)
+                  assert not p.is_absolute() and not set(p.parts) & {'..', '.git', '.github', '.signing'}
+                  assert p.suffix.lower() not in {'.p12', '.pem', '.jks', '.key', '.keystore'}
+              z.extractall('.')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app android scripts docs parent-dashboard README.md BUILDING.md CI.md PROJECT-HISTORY.md .gitignore
+          git rm CI-SOURCE-BOOTSTRAP.zip
+          git commit -m 'Import complete app sources and private-signing CI support'
+          git push origin HEAD:main
