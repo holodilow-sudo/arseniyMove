@@ -1,0 +1,116 @@
+name: Android APK
+on:
+  push:
+    branches: [main]
+    paths: ['app/**', 'android/**', 'scripts/**', '.github/workflows/android.yml']
+  pull_request:
+    paths: ['app/**', 'android/**', 'scripts/**', '.github/workflows/android.yml']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Версия, например 1.0.15 (пусто = из исходников)'
+        required: false
+        type: string
+      version_code:
+        description: 'Код Android, например 16 (пусто = из исходников)'
+        required: false
+        type: string
+      publish:
+        description: 'Опубликовать новое обновление в Releases'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check training logic
+        run: |
+          node scripts/test-state.mjs
+          node scripts/test-progress.mjs
+          node scripts/test-pose-engine.mjs
+          node scripts/test-boat.mjs
+          node scripts/test-hang.mjs
+          node scripts/test-voice-count.mjs
+          node scripts/parent-dashboard-test.mjs
+          python scripts/test-ci-release.py
+  build:
+    needs: checks
+    if: github.repository == 'holodilow-sudo/arseniyMove' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: windows-2022
+    timeout-minutes: 20
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Check hosted Android SDK
+        shell: pwsh
+        run: |
+          if (!(Test-Path "$env:ANDROID_HOME/build-tools/35.0.0/aapt2.exe")) { throw 'Android Build Tools 35.0.0 missing' }
+          if (!(Test-Path "$env:ANDROID_HOME/platforms/android-35/android.jar")) { throw 'Android Platform 35 missing' }
+      - name: Set and validate release version
+        id: version
+        shell: pwsh
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_CODE: ${{ inputs.version_code }}
+          PUBLISH_RELEASE: ${{ github.event_name == 'workflow_dispatch' && inputs.publish }}
+        run: |
+          [xml]$manifest = Get-Content android/src/main/AndroidManifest.xml
+          $ver = if ($env:INPUT_VERSION) { $env:INPUT_VERSION } else { $manifest.manifest.versionName }
+          $code = if ($env:INPUT_CODE) { $env:INPUT_CODE } else { $manifest.manifest.versionCode }
+          $arguments = @('scripts/ci-release.py', 'prepare', '--version', $ver, '--code', $code)
+          if ($env:PUBLISH_RELEASE -eq 'true') { $arguments += '--publish' }
+          python @arguments
+          if ($LASTEXITCODE -ne 0) { throw 'Invalid release version' }
+          "version=$ver" >> $env:GITHUB_OUTPUT
+      - name: Build and verify using private signing secrets
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: python scripts/ci-release.py build
+      - name: Upload verified release files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ArseniyMove-${{ steps.version.outputs.version }}-${{ github.run_number }}
+          path: release-output/*
+          if-no-files-found: error
+          retention-days: 14
+  publish:
+    needs: build
+    if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: ArseniyMove-${{ needs.build.outputs.version }}-${{ github.run_number }}
+          path: release-output
+      - name: Publish a new stable release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          set -euo pipefail
+          cd release-output
+          sha256sum -c "ArseniyMove-${RELEASE_VERSION}.apk.sha256"
+          sha256sum -c "ArseniyMove-${RELEASE_VERSION}-source.zip.sha256"
+          printf '%s\n\n' 'APK собран GitHub Actions и подписан прежним ключом. Устанавливайте поверх старой версии, без удаления приложения.' 'Для проверки сразу: Настройки → Проверить обновления. Установку подтверждает пользователь. Исходники и инструкция приложены. Проверка установки на физическом телефоне выполняется отдельно.' > notes.txt
+          gh release create "v${RELEASE_VERSION}" "ArseniyMove-${RELEASE_VERSION}.apk" "ArseniyMove-${RELEASE_VERSION}.apk.sha256" "ArseniyMove-${RELEASE_VERSION}-source.zip" "ArseniyMove-${RELEASE_VERSION}-source.zip.sha256" "Install-${RELEASE_VERSION}.txt" verification.json --repo "$GH_REPO" --target "$GITHUB_SHA" --title "Arseniy Move ${RELEASE_VERSION}" --notes-file notes.txt --latest
