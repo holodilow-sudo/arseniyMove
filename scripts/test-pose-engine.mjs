@@ -84,51 +84,63 @@ for(const exercise of ['pushup','squat','pullup']){
   test(exercise+': out-of-frame essentials never count',()=>{const key=exercise==='pullup'?'wrist':'ankle',h=harness(exercise,l=>{l[sides.left[key]].x=-.2;l[sides.right[key]].x=-.2;return l;});assert.equal(h.rep().count,0);assert.equal(h.last.metrics.reason,'out-of-frame');});
 }
 for(const exercise of ['pushup','squat'])for(const source of ['image','world']){
-  const oldBottom=exercise==='pushup'?105:112,newBottom=oldBottom+5;
-  test(exercise+': '+source+' estimate within 3 degrees of extended top still counts',()=>{
-    const r=estimatedCycle(exercise,{top:156,bottom:oldBottom-5,source});assert.equal(r.count,1,JSON.stringify(r));
+  const top=exercise==='pushup'?151:159,newBottom=exercise==='pushup'?115:112;
+  test(exercise+': '+source+' estimate at the exercise-specific extended top still counts',()=>{
+    const r=estimatedCycle(exercise,{top,bottom:newBottom-6,source});assert.equal(r.count,1,JSON.stringify(r));
   });
-  test(exercise+': '+source+' estimate within 5 degrees of bottom still counts',()=>{
+  test(exercise+': '+source+' estimate at the exercise-specific bottom still counts',()=>{
     const r=estimatedCycle(exercise,{bottom:newBottom-1,source});assert.equal(r.count,1,JSON.stringify(r));
   });
   for(const cadence of [125,250])test(exercise+': '+source+' small endpoint jitter counts once at '+cadence+' ms',()=>{
-    const r=estimatedCycle(exercise,{top:156,bottom:newBottom-1,source,cadence,noise:.75});assert.equal(r.count,1,JSON.stringify(r));
+    const r=estimatedCycle(exercise,{top,bottom:newBottom-1,source,cadence,noise:.75});assert.equal(r.count,1,JSON.stringify(r));
   });
   test(exercise+': '+source+' repeated relaxed endpoints without transit cannot count',()=>{
     const tracker=createTracker({exercise});let timestamp=0,last;
     const frame=(amount,angle)=>{last=tracker.update({...estimatedAnglePose(exercise,amount,angle,source),timestamp,aspectRatio:1});timestamp+=250;};
-    for(let i=0;i<5;i++)frame(0,156);
+    for(let i=0;i<5;i++)frame(0,top);
     for(let repeat=0;repeat<3;repeat++){
       for(let i=0;i<5;i++)frame(1,newBottom-1);
-      for(let i=0;i<5;i++)frame(0,156);
+      for(let i=0;i<5;i++)frame(0,top);
     }
     assert.equal(last.count,0,JSON.stringify(last));
   });
   test(exercise+': '+source+' tolerance does not credit an implausibly short excursion',()=>{
-    const r=estimatedCycle(exercise,{top:156,bottom:newBottom-1,source,duration:750});assert.equal(r.count,0,JSON.stringify(r));
+    const r=estimatedCycle(exercise,{top,bottom:newBottom-1,source,duration:750});assert.equal(r.count,0,JSON.stringify(r));
   });
   test(exercise+': '+source+' bottom jitter cannot count without the return or duplicate it',()=>{
     const tracker=createTracker({exercise});let timestamp=0,last;
     const frame=(amount,angle)=>{last=tracker.update({...estimatedAnglePose(exercise,amount,angle,source),timestamp,aspectRatio:1});timestamp+=125;};
-    for(let i=0;i<7;i++)frame(0,156);
-    for(let i=1;i<=8;i++)frame(i/8,156+(newBottom-1-156)*i/8);
+    for(let i=0;i<7;i++)frame(0,top);
+    for(let i=1;i<=8;i++)frame(i/8,top+(newBottom-1-top)*i/8);
     for(let i=0;i<16;i++)frame(1,i%2?newBottom-1:120);
     assert.equal(last.count,0,JSON.stringify(last));
-    for(let i=1;i<=8;i++)frame(1-i/8,newBottom-1+(156-newBottom+1)*i/8);
-    for(let i=0;i<8;i++)frame(0,156+(i%2?.5:-.5));
+    for(let i=1;i<=8;i++)frame(1-i/8,newBottom-1+(top-newBottom+1)*i/8);
+    for(let i=0;i<8;i++)frame(0,top+(i%2?.5:-.5));
     assert.equal(last.count,1,JSON.stringify(last));
   });
   test(exercise+': '+source+' insufficient extension outside tolerance cannot acquire start',()=>{
-    const r=estimatedCycle(exercise,{top:153,bottom:oldBottom-5,source});assert.equal(r.count,0,JSON.stringify(r));
+    const r=estimatedCycle(exercise,{top:top-2,bottom:newBottom-6,source});assert.equal(r.count,0,JSON.stringify(r));
   });
   test(exercise+': '+source+' partial depth outside tolerance does not count',()=>{
     const r=estimatedCycle(exercise,{bottom:newBottom+1,source});assert.equal(r.count,0,JSON.stringify(r));
   });
   test(exercise+': '+source+' angle tolerance cannot replace actual body travel',()=>{
-    const r=estimatedCycle(exercise,{top:156,bottom:newBottom-1,source,bodyScale:.35});assert.equal(r.count,0,JSON.stringify(r));
+    const r=estimatedCycle(exercise,{top,bottom:newBottom-1,source,bodyScale:.35});assert.equal(r.count,0,JSON.stringify(r));
   });
   test(exercise+': '+source+' stopping before the complete return does not count',()=>{
-    const r=estimatedCycle(exercise,{top:156,bottom:newBottom-1,source,finalAmount:.15});assert.equal(r.count,0,JSON.stringify(r));
+    const r=estimatedCycle(exercise,{top,bottom:newBottom-1,source,finalAmount:.15});assert.equal(r.count,0,JSON.stringify(r));
+  });
+}
+
+for(const source of ['image','world'])for(const cadence of [125,250]){
+  test('Pushup: previously missed endpoints count at '+cadence+' ms using '+source,()=>{
+    const r=estimatedCycle('pushup',{top:153,bottom:114,source,cadence});assert.equal(r.count,1,JSON.stringify(r));
+  });
+  test('Squat: previously tolerated bent start is now rejected using '+source+' at '+cadence+' ms',()=>{
+    const r=estimatedCycle('squat',{top:156,bottom:105,source,cadence});assert.equal(r.count,0,JSON.stringify(r));
+  });
+  test('Squat: previously tolerated shallow depth is now rejected using '+source+' at '+cadence+' ms',()=>{
+    const r=estimatedCycle('squat',{top:170,bottom:116,source,cadence});assert.equal(r.count,0,JSON.stringify(r));
   });
 }
 
