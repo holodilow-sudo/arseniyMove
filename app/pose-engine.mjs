@@ -161,13 +161,14 @@ const feedbackFor={
  */
 export function createTracker({exercise}={}){
   if(!EXERCISES.has(exercise))throw new TypeError('Unknown exercise: '+exercise);
-  // Small endpoint allowances for model-angle noise, scoped to these two moves.
+  // Exercise-specific allowances: more elbow-angle tolerance for push-ups,
+  // tighter knee-angle endpoints for squats.
   // Keep body travel, anchored supports, timing and a full return mandatory.
   // The intermediate band excludes the relaxed bottom, so that endpoint alone
   // cannot substitute for observed movement. Keep the existing return gate;
   // shifting it later loses sparse-camera returns between consecutive repeats.
-  const angleLimits=exercise==='pushup'?{top:155,bottom:110,returnExit:119,midMin:112}
-    :exercise==='squat'?{top:155,bottom:117,returnExit:119,midMin:117}
+  const angleLimits=exercise==='pushup'?{top:150,bottom:115,returnExit:119,midMin:115}
+    :exercise==='squat'?{top:158,bottom:112,returnExit:119,midMin:112}
     :{top:LIMITS.topEnter,bottom:LIMITS.lowEnter,returnExit:LIMITS.lowExit,midMin:112};
   let count=0,holdMs=0,continuousHoldMs=0,lastTimestamp=null,lastFrameInterval=0,lastMeasurement=null,side=null,source=null;
   let boatDropoutAt=null;
