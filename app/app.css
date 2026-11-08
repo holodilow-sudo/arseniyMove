@@ -42,3 +42,6 @@
 .screen .exercise-art-hang{background-image:url('hang-3d.png');background-size:contain;background-position:center;background-repeat:no-repeat}
 
 .update-panel .button{width:100%;margin-top:14px}.update-panel progress{display:block;width:100%;height:10px;margin:16px 0 5px;accent-color:var(--lime)}.update-panel>small{color:var(--muted)}.update-panel h2{overflow-wrap:anywhere}.update-panel .footnote{margin-bottom:0}
+
+/* Review-only controls; never rendered in the installed app. */
+.tutorial-preview-picker{display:grid;gap:10px;padding:16px 0 20px;border-bottom:1px solid #354952;margin-bottom:14px}.tutorial-preview-picker strong{font-size:10px;letter-spacing:1px;color:var(--lime)}.tutorial-preview-picker label,.tutorial-preview-picker a{font-size:12px}.tutorial-preview-picker select{width:100%;min-width:0;min-height:44px;padding:10px;border:1px solid #354952;border-radius:10px;background:#1b2b35;color:#f7f5ea}

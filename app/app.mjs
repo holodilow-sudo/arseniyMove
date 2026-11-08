@@ -1,4 +1,5 @@
 import {updatePanel} from './updates.mjs';
+import {TUTORIALS} from './tutorials.mjs';
 import {EXERCISES,PHRASES,loadState,completeSession,todayCompleted,chooseRequestExercise,dayKey} from './state.mjs';
 import {renderTrainingProgress} from './progress.mjs';
 import {createTracker} from './pose-engine.mjs';
@@ -40,10 +41,15 @@ function cameraDiagnostic(detail,c=nativeCapabilities()||{}){return [`Arseniy Mo
 function rememberCameraIssue(message,detail){lastCameraIssue={message,diagnostic:cameraDiagnostic(detail)};try{localStorage.setItem(`${STORE}-camera-issue`,JSON.stringify(lastCameraIssue));}catch{}}
 function nav(){return `<nav class="bottom-nav" aria-label="Разделы">${[['home','home','Тренировка'],['progress','reward','Прогресс'],['settings','settings','Настройки']].map(([id,i,title])=>`<button class="nav-button ${screen===id?'active':''}" data-action="nav" data-screen="${id}" ${screen===id?'aria-current="page"':''}>${icon(i)}<span>${title}</span></button>`).join('')}</nav>`;}
 function header(back=false){return `<header class="topbar">${back?`<button class="icon-button" data-action="back" aria-label="Назад">${icon('back')}</button>`:`<div class="brand"><span class="brand-mark">M<span>↗</span></span><div>ARSENIY<span>MOVE / ТВОЙ РИТМ</span></div></div>`}<div class="header-balance"><span class="coin-dot">◆</span> ${state.coins}</div><button class="icon-button" data-action="sound" aria-label="${audioEnabled()?'Выключить все звуки':'Включить звук'}" aria-pressed="${audioEnabled()}">${icon('sound')}${audioEnabled()?'':'<b class="sound-off">/</b>'}</button></header>`;}
+// Keep preview media in the top-level document: nested video surfaces can render black in the desktop browser.
+function tutorialPreviewPicker(){
+  if(!DEMO||params.get('tutorialGallery')!=='1')return '';
+  return `<aside class="tutorial-preview-picker"><strong>ПРЕДПРОСМОТР · APK НЕ СОБРАН</strong><label for="preview-exercise">Выбери упражнение</label><select id="preview-exercise">${Object.entries(EXERCISES).map(([id,x])=>`<option value="${id}" ${exercise===id?'selected':''}>${escape(x.name)} · ${TUTORIALS[id].seconds} сек</option>`).join('')}</select><a href="media/${exercise}-technique.mp4" target="_blank" rel="noopener">Открыть ролик отдельно ↗</a></aside>`;
+}
 function render(){
   document.documentElement.dataset.accent=state.theme;
   const content={home:home,tutorial:tutorial,setup:setup,workout:workout,result:result,progress:progress,settings:settings,request:request,report:report}[screen]||home;
-  app.innerHTML=`${DEMO?'<div class="demo-banner">ПРЕДПРОСМОТР · все результаты здесь демонстрационные</div>':''}${header(!['home','progress','settings'].includes(screen))}<main id="main" class="screen" tabindex="-1">${['home','progress'].includes(screen)?'<div id="update-banner"></div>':''}${content()}${screen==='settings'?'<div id="update-settings"></div>':''}</main>${['home','progress','settings'].includes(screen)?nav():''}`;
+  app.innerHTML=`${tutorialPreviewPicker()}${DEMO?'<div class="demo-banner">ПРЕДПРОСМОТР · все результаты здесь демонстрационные</div>':''}${header(!['home','progress','settings'].includes(screen))}<main id="main" class="screen" tabindex="-1">${['home','progress'].includes(screen)?'<div id="update-banner"></div>':''}${content()}${screen==='settings'?'<div id="update-settings"></div>':''}</main>${['home','progress','settings'].includes(screen)?nav():''}`;
   if(screen==='report')drawReportPreview();refreshVoiceStatus();refreshUpdates();
   window.MoveNative?.setUpdateAllowed?.(['home','settings','progress'].includes(screen));
 }
@@ -62,19 +68,19 @@ function home(){
   <div class="motivation"><span>✦</span><p>${PHRASES[new Date().getDate()%PHRASES.length]}</p></div>
   <p class="footnote">${state.reminder.enabled?`Напоминание: ${'07:00 и 19:00 каждый день · сб и вс ещё 14:00'} · ${escape(reminderStatus())}`:'Напоминания пока выключены. Время можно выбрать в настройках.'}</p>`;
 }
-function tutorial(){return `<section class="tutorial-heading"><span class="eyebrow">ОТЖИМАНИЯ · ВИДЕО 30 СЕКУНД</span><h1>Сначала техника</h1><p>Посмотри движение. Русские подписи помогут разобраться.</p></section>
-  <div class="tutorial-player"><video id="tutorial-video" controls playsinline preload="metadata" poster="media/pushup-poster.jpg" aria-label="Как выполнять отжимания: видео с русскими подсказками"><source src="media/pushup-technique.mp4" type="video/mp4"><track kind="subtitles" src="media/pushup-technique-ru.vtt" srclang="ru" label="Русские подсказки" default>На этом устройстве видео не поддерживается. Используй подсказки ниже.</video></div>
-  <section class="panel tutorial-tips" aria-label="Три подсказки для отжиманий"><ol><li><span>01</span><strong>Ладони чуть шире плеч</strong></li><li><span>02</span><strong>Корпус ровный</strong></li><li><span>03</span><strong>Вниз плавно, вверх без рывка</strong></li></ol></section>
+function tutorial(){const t=TUTORIALS[exercise],x=EXERCISES[exercise];return `<section class="tutorial-heading"><span class="eyebrow">${escape(x.name.toUpperCase())} · ВИДЕО ${t.seconds} СЕК</span><h1>Сначала техника</h1><p>Посмотри движение. Русские подписи помогут разобраться.</p></section>
+  <div class="tutorial-player"><video id="tutorial-video" controls playsinline preload="metadata" poster="media/${exercise}-poster.jpg" style="aspect-ratio:${t.burned? '16/11':'16/9'}" aria-label="${escape(x.name)}: видео с русскими подсказками"><source src="media/${exercise}-technique.mp4" type="video/mp4"><track kind="subtitles" src="media/${exercise}-technique-ru.vtt" srclang="ru" label="Русские подсказки" ${t.burned?'':'default'}>На этом устройстве видео не поддерживается. Используй подсказки ниже.</video></div>
+  <section class="panel tutorial-tips" aria-label="${escape(x.name)}: три подсказки"><ol>${t.tips.map((tip,i)=>`<li><span>0${i+1}</span><strong>${escape(tip)}</strong></li>`).join('')}</ol></section>
   ${button(`${icon('camera')} К настройке камеры`,'tutorial-next')}
   <p class="footnote tutorial-note">Камера включится на следующем экране — только по твоему нажатию.</p>
-  <details class="tutorial-source"><summary>О видео</summary><p>Видео: Culture of Fitness: Push Ups · Defense Media Activity. Фрагмент 00:06–00:36. Звук — английский. Русские подсказки добавлены для Arseniy Move. Общественное достояние.</p><p>Источник: DVIDS · видео 1016258. Использование материала не означает одобрение приложения его автором.</p><p lang="en">The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.</p></details>`;}
+  <details class="tutorial-source"><summary>О видео</summary><p>Видео: ${escape(t.title)} · ${escape(t.author)}. ${escape(t.excerpt)}. ${t.burned?'Без звука. Русские подсказки встроены в видео.':'Звук — английский. Русские подсказки можно включить в плеере.'} Материал отмечен источником как общественное достояние.</p><p>Источник: ${t.sourceId?`DVIDS · видео ${t.sourceId}`:'CDC · Muscle Strengthening at Home'}. Использование материала не означает одобрение приложения его автором.</p>${t.sourceId?'<p lang="en">The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.</p>':''}</details>`;}
 function setup(){const x=EXERCISES[exercise];return `<div class="section-head"><div><span class="eyebrow">${requestMinutes?'ЗАДАНИЕ ДЛЯ ПРОСЬБЫ ПАПЕ':'ГОТОВИМСЯ К ДВИЖЕНИЮ'}</span><h1>${x.name}</h1></div></div>
   <div class="setup-art ${x.color}"><span class="exercise-art exercise-art-${exercise}" aria-hidden="true"></span><div><strong aria-hidden="true">∞</strong><span>${['plank','boat','hang'].includes(exercise)?'Секундомер':'Свободный счёт'}</span></div></div>
   <p class="free-count-note">Сколько делать — договоритесь с папой. Камера считает, а ты сам нажимаешь «Завершить».</p>
   <section class="panel"><h2>Настроим камеру</h2><ol class="setup-list"><li>${x.placement}</li><li>Убедись, что свет падает на тебя, а телефон не двигается.</li><li>${x.cue}</li></ol></section>
   <div class="camera-note">${icon('camera')}<p>Подсчёт на устройстве.<br><strong>Видео не сохраняется.</strong></p></div>
   ${DEMO?'':cameraChoice()}${button(DEMO?'Посмотреть демонстрацию':'Включить камеру','start')}
-  ${exercise==='pushup'?button('Повторить технику','tutorial-repeat','ghost'):''}
+  ${button('Повторить технику','tutorial-repeat','ghost')}
   <p class="footnote">${DEMO?'В предпросмотре счётчик анимирован для показа интерфейса. Камера не включается.':['plank','boat','hang'].includes(exercise)?'Прими устойчивое положение и дождись надписи «Таймер идёт». Если больно или тяжело — остановись.':'Перед первым повтором задержись в исходном положении, пока появится «Готов». Затем двигайся плавно. Если больно или тяжело — остановись.'}</p>`;}
 function workout(){const x=EXERCISES[exercise];return `<div class="section-head"><div><span class="eyebrow">${DEMO?'ДЕМОНСТРАЦИЯ ЭКРАНА':'КАМЕРА · ПОДСЧЁТ ДВИЖЕНИЙ'}</span><h1>${x.name}</h1></div><span class="pill" id="tracking-state">${DEMO?'ДЕМО':'Подготовка'}</span></div>
   <div class="camera-stage ${cameraFacing==='environment'?'rear-camera':''}"><video id="camera-video" playsinline autoplay muted></video><canvas id="pose-overlay"></canvas><div class="camera-placeholder ${DEMO?'demo-pose':''}" id="camera-placeholder"><span class="exercise-art exercise-art-${exercise}" aria-hidden="true"></span><span>${DEMO?'ПРИМЕР ДВИЖЕНИЯ':'Камера готовится'}</span></div><div class="frame-corners"></div><div class="camera-top"><span class="camera-dot"></span>${DEMO?'ДЕМО · БЕЗ КАМЕРЫ':'ЛОКАЛЬНО · БЕЗ ЗАПИСИ'}</div><div class="camera-feedback" id="camera-feedback" role="status">${DEMO?'Полное движение → один повтор':'Подготавливаем распознавание…'}</div></div>
@@ -167,8 +173,8 @@ async function handleAction(action,el){
     case 'progress-day':progressDay=el.dataset.day;render();break;
     case 'nav':requestMinutes=null;go(el.dataset.screen);break;
     case 'home':requestMinutes=null;go('home');break;
-    case 'exercise':requestMinutes=null;exercise=el.dataset.exercise;preparationOrigin='home';tutorialReturn='home';go(exercise==='pushup'?'tutorial':'setup');break;
-    case 'back':if(screen==='workout')stopDialog();else if(screen==='report')go('result');else if(screen==='tutorial')go(tutorialReturn);else if(screen==='setup'){if(exercise==='pushup'){tutorialReturn=preparationOrigin;go('tutorial');}else go(preparationOrigin);}else{requestMinutes=null;go('home');}break;
+    case 'exercise':requestMinutes=null;exercise=el.dataset.exercise;preparationOrigin='home';tutorialReturn='home';go('tutorial');break;
+    case 'back':if(screen==='workout')stopDialog();else if(screen==='report')go('result');else if(screen==='tutorial')go(tutorialReturn);else if(screen==='setup'){tutorialReturn=preparationOrigin;go('tutorial');}else{requestMinutes=null;go('home');}break;
     case 'tutorial-next':go('setup');break;
     case 'tutorial-repeat':tutorialReturn='setup';go('tutorial');break;
     case 'start':startWorkout();break;
@@ -189,7 +195,7 @@ async function handleAction(action,el){
     case 'test-sound':if(!state.sound||state.muted){toast('Сначала включи звуки');break;}sound.reward();break;
     case 'request':requestMinutes=15;go('request');break;
     case 'minutes':requestMinutes=Number(el.dataset.minutes);render();break;
-    case 'start-request':requestMinutes||=15;exercise=requestExercise;preparationOrigin='request';tutorialReturn='request';go(exercise==='pushup'?'tutorial':'setup');break;
+    case 'start-request':requestMinutes||=15;exercise=requestExercise;preparationOrigin='request';tutorialReturn='request';go('tutorial');break;
     case 'use-today':lastResult={...state.history.filter(h=>dayKey(h.endedAt)===dayKey()).at(-1),reward:{coins:0,xp:0}};go('report');break;
     case 'report':go('report');break;
     case 'history':requestMinutes=null;lastResult={...state.history.find(x=>x.id===el.dataset.id),reward:{coins:0,xp:0}};go('report');break;
@@ -207,6 +213,11 @@ async function handleAction(action,el){
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b||b.disabled||b.dataset.action==='save-reminder')return;handleAction(b.dataset.action,b);});
 document.addEventListener('change',e=>{if(e.target.id==='sound-switch'){state.sound=e.target.checked;syncAudio();save();refreshAudioButton();if(state.sound&&!state.muted)sound.tap();}if(e.target.id==='voice-switch'){state.voiceCount=e.target.checked;syncAudio();save();refreshAudioButton();}});
+document.addEventListener('change',e=>{
+  if(!DEMO||params.get('tutorialGallery')!=='1'||e.target.id!=='preview-exercise'||!EXERCISES[e.target.value])return;
+  pauseTutorial();stopCamera();exercise=e.target.value;requestMinutes=null;preparationOrigin='home';tutorialReturn='home';
+  params.set('exercise',exercise);params.set('screen','tutorial');history.replaceState(null,'',`${location.pathname}?${params}`);go('tutorial');
+});
 document.addEventListener('submit',e=>{
   if(e.target.id==='reminder-form'){e.preventDefault();const f=new FormData(e.target),days=[1,2,3,4,5,6,7],enabled=f.get('enabled')==='on',time='07:00';if(enabled&&!days.length){toast('Выбери хотя бы один день');return;}if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(time)){toast('Укажи время');return;}
     const reminder={enabled,time,days,requestId:uid()};
@@ -231,7 +242,7 @@ window.MoveApp={pauseForBackground,
 // Preview data exists only on the local review server and uses a separate store.
 function demoResult(){return {id:'preview-example',exercise:'pushup',mode:'free',goal:null,actual:10,source:'camera-estimate',demo:true,startedAt:new Date(Date.now()-76000).toISOString(),endedAt:new Date().toISOString(),trackedFrames:96,lostFrames:3,reward:{coins:20,xp:50}};}
 if(DEMO){
-  window.MovePreview={show(which){pauseTutorial();stopCamera();exercise='pushup';lastResult=demoResult();requestMinutes=null;preparationOrigin='home';tutorialReturn='home';
+  window.MovePreview={show(which){pauseTutorial();stopCamera();exercise=EXERCISES[params.get('exercise')]?params.get('exercise'):'pushup';lastResult=demoResult();requestMinutes=null;preparationOrigin='home';tutorialReturn='home';
     if(which==='request-report'){requestMinutes=30;screen='report';}else screen=which;
     if(['result','report'].includes(screen))completeSession(state,lastResult);
     if(screen==='workout'){session={...demoResult(),id:uid(),actual:6};tracker=createTracker({exercise});cameraPaused=false;render();updateCounter(6,true,'Демо: полный цикл засчитан');return;}
