@@ -40,7 +40,7 @@ const ROOT=path.resolve(__dirname,'..'),BASE='http://127.0.0.1:4187/app/';
     await page.locator('[data-action="back"]').click();await page.locator('[data-action="back"]').click();
     check('Request minutes survive technique/setup/back navigation',await page.locator('[data-action="minutes"].active').getAttribute('data-minutes')==='30');
     await page.locator('[data-action="back"]').click();await page.locator('[data-action="exercise"][data-exercise="squat"]').click();
-    check('Other exercises go straight to their own camera setup',await page.locator('h1').innerText()==='Приседания'&&await page.locator('[data-action="start"]').count()===1&&await page.locator('#tutorial-video').count()===0);
+    check('Squats also enter their own video instruction before camera setup',await page.locator('h1').innerText()==='Сначала техника'&&await page.locator('#tutorial-video source').getAttribute('src')==='media/squat-technique.mp4'&&await page.locator('[data-action="start"]').count()===0);
     await page.evaluate(()=>MovePreview.show('tutorial'));await page.locator('#tutorial-video').evaluate(v=>v.play());await page.evaluate(()=>MoveApp.pauseForBackground());
     check('Native background callback pauses instructional video',await page.locator('#tutorial-video').evaluate(v=>v.paused));
     await page.locator('#tutorial-video').evaluate(v=>v.play());await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});document.dispatchEvent(new Event('visibilitychange'));});

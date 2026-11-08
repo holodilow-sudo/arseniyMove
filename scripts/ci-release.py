@@ -118,7 +118,7 @@ def package():
     (out / f'Install-{ver}.txt').write_text(instruction, encoding='utf-8')
     # Explicit source allowlist. No runner temp, build directories or signing material.
     files = []
-    for folder in ['app', 'android/src/main', 'android/tools', 'scripts', 'docs', 'parent-dashboard', '.github/workflows']:
+    for folder in ['app', 'android/src/main', 'android/tools', 'scripts', 'docs', 'preview', 'parent-dashboard', '.github/workflows']:
         files += [p for p in (ROOT / folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]
     files += [p for p in (ROOT / 'android/qa').glob('*') if p.suffix in {'.java', '.py', '.md'}]
     files += [ROOT / n for n in ['README.md', 'BUILDING.md', 'CI.md', '.gitignore'] if (ROOT / n).is_file()]
