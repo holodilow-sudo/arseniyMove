@@ -1,0 +1,208 @@
+{
+  "squat": {
+    "name": "Приседания",
+    "title": "Body Weight Squat",
+    "author": "Joshua Pena · U.S. Marine Corps Training and Education Command",
+    "sourceId": 517502,
+    "start": 18,
+    "seconds": 12,
+    "crop": null,
+    "poster": 3,
+    "tips": [
+      "Стопы устойчиво, пятки на полу",
+      "Таз назад, колени по линии стоп",
+      "Плавно опустись и полностью выпрямись"
+    ],
+    "cues": [
+      [
+        0,
+        3,
+        "Стопы на ширине плеч.\nПятки остаются на полу."
+      ],
+      [
+        3,
+        7,
+        "Опускайся плавно.\nКолени направляй по линии стоп."
+      ],
+      [
+        7,
+        12,
+        "Вернись в исходное положение.\nВыпрямись без рывка."
+      ]
+    ],
+    "burned": true,
+    "excerpt": "Фрагмент 00:18–00:30",
+    "originalSha256": "05b5870da6ebc66abcfd5715a2864e21299d176dc2c87524d3f5904c37450f66",
+    "sha256": "00c2daf22008d56ffd6e19bdd6501d3398f84291c0ac99796d80150947e8a294",
+    "bytes": 813737,
+    "source": "https://d34w7g4gy10iej.cloudfront.net/video/1704/DOD_104245094/DOD_104245094-1024x576-1769k.mp4",
+    "sourcePage": "https://www.dvidshub.net/video/517502",
+    "license": "Public domain (source declaration)",
+    "processing": "Time excerpt, single-view crop where specified, resize, Russian captions burned into added upper band (clear of player controls), original audio omitted. No speed change or repeated motion."
+  },
+  "plank": {
+    "name": "Планка",
+    "title": "Plank",
+    "author": "Matthew Holfinger · U.S. Marine Corps Training and Education Command",
+    "sourceId": 640237,
+    "start": 0,
+    "seconds": 12,
+    "crop": "480:270:300:296",
+    "poster": 4,
+    "tips": [
+      "Локти под плечами",
+      "Корпус ровный, поясница не провисает",
+      "Дыши спокойно; устал — отдохни"
+    ],
+    "cues": [
+      [
+        0,
+        3,
+        "Локти под плечами.\nОпирайся на предплечья и носки."
+      ],
+      [
+        3,
+        9,
+        "Корпус ровный.\nНе задерживай дыхание."
+      ],
+      [
+        9,
+        12,
+        "Опусти колени на пол.\nОтдохни перед следующим подходом."
+      ]
+    ],
+    "burned": true,
+    "excerpt": "Фрагмент 00:00–00:12",
+    "originalSha256": "ccfc4e0e7bf94a98de7cbba53539fea2f5f6211b1d127e919920c70b674fd4c8",
+    "sha256": "12219829fbbc887c2e7809c0bf8063005d64f8bd7d2c06b3f399c5791c1ab0c0",
+    "bytes": 462842,
+    "source": "https://d34w7g4gy10iej.cloudfront.net/video/1811/DOD_106215226/DOD_106215226-1024x576-1769k.mp4",
+    "sourcePage": "https://www.dvidshub.net/video/640237",
+    "license": "Public domain (source declaration)",
+    "processing": "Time excerpt, single-view crop where specified, resize, Russian captions burned into added upper band (clear of player controls), original audio omitted. No speed change or repeated motion."
+  },
+  "pullup": {
+    "name": "Подтягивания",
+    "title": "Dead Hang Pullup",
+    "author": "Matthew Holfinger · U.S. Marine Corps Training and Education Command",
+    "sourceId": 639937,
+    "start": 5.5,
+    "seconds": 16,
+    "crop": "512:288:272:6",
+    "poster": 10,
+    "tips": [
+      "Начни с прямых рук и устойчивого хвата",
+      "Подтягивайся без раскачивания",
+      "Плавно вернись к прямым рукам"
+    ],
+    "cues": [
+      [
+        0,
+        5,
+        "Возьмись за перекладину.\nНачни с прямых рук."
+      ],
+      [
+        5,
+        11,
+        "Подтягивайся без раскачки.\nПодбородок — выше перекладины."
+      ],
+      [
+        11,
+        16,
+        "Опускайся плавно.\nВернись к прямым рукам."
+      ]
+    ],
+    "burned": true,
+    "excerpt": "Фрагмент 00:05.5–00:21.5",
+    "originalSha256": "fbbac4b03b70ff2b405de409ee90b558b68078461e7013c45ded51383131ef7e",
+    "sha256": "acbb85c001751a5c61e5e1119788d3bbc81a22ea5089ea511838ee68cdb60cbc",
+    "bytes": 561813,
+    "source": "https://d34w7g4gy10iej.cloudfront.net/video/1811/DOD_106211182/DOD_106211182-1024x576-1769k.mp4",
+    "sourcePage": "https://www.dvidshub.net/video/639937",
+    "license": "Public domain (source declaration)",
+    "processing": "Time excerpt, single-view crop where specified, resize, Russian captions burned into added upper band (clear of player controls), original audio omitted. No speed change or repeated motion."
+  },
+  "hang": {
+    "name": "Вис на турнике",
+    "title": "\"Dead Hanging\" in April",
+    "author": "Derika Upshaw · Fort Hood Public Affairs Office",
+    "sourceId": 991796,
+    "start": 58,
+    "seconds": 12,
+    "crop": null,
+    "poster": 5,
+    "tips": [
+      "Держись двумя руками",
+      "Виси спокойно, без раскачки",
+      "Время выберите с папой; не жди ослабления хвата"
+    ],
+    "cues": [
+      [
+        0,
+        4,
+        "Держись за перекладину\nобеими руками."
+      ],
+      [
+        4,
+        8,
+        "Виси спокойно, без раскачки.\nНе задерживай дыхание."
+      ],
+      [
+        8,
+        12,
+        "Время выберите с папой.\nЗакончи до ослабления хвата."
+      ]
+    ],
+    "burned": true,
+    "excerpt": "Фрагмент 00:58–01:10",
+    "originalSha256": "108c671973de7512f7a4842f7622ddedc51c7cdda69dfccd99a660a1e4b187e9",
+    "sha256": "cf971fe5a66b8393a85fa8384a907557cca77a5550819f97616d9c352e08221c",
+    "bytes": 1016445,
+    "source": "https://d34w7g4gy10iej.cloudfront.net/video/2512/DOD_111461991/DOD_111461991.mp4",
+    "sourcePage": "https://www.dvidshub.net/video/991796",
+    "license": "Public domain (source declaration)",
+    "processing": "Time excerpt, single-view crop where specified, resize, Russian captions burned into added upper band (clear of player controls), original audio omitted. No speed change or repeated motion.",
+    "downloadVariant": "https://d34w7g4gy10iej.cloudfront.net/video/2512/DOD_111461991/DOD_111461991-768x432-1918k-hls_4.m3u8"
+  },
+  "boat": {
+    "name": "Лодочка",
+    "title": "Muscle Strengthening at Home — Superman",
+    "author": "Centers for Disease Control and Prevention (CDC)",
+    "sourceId": null,
+    "start": 31,
+    "seconds": 18,
+    "crop": "320:180:0:30",
+    "poster": 6,
+    "tips": [
+      "Ляг на живот и вытягивай руки вперёд",
+      "Небольшой подъём рук, груди и ног",
+      "Смотри в коврик; без рывков и сильного прогиба"
+    ],
+    "cues": [
+      [
+        0,
+        5,
+        "Руки вперёд. Смотри в коврик.\nНе запрокидывай голову."
+      ],
+      [
+        5,
+        12,
+        "Приподними руки, грудь и ноги.\nБез рывка и сильного прогиба."
+      ],
+      [
+        12,
+        18,
+        "Дыши спокойно. Затем опустись.\nЕсли больно — остановись."
+      ]
+    ],
+    "burned": true,
+    "excerpt": "Фрагмент 00:31–00:49",
+    "originalSha256": "ebe1e2f4942e41125a308ea2370a98d1a838aa222208d5edcc1b814b899bba16",
+    "sha256": "d7622496832ca04c2ae68acdf2e114f782a5f0a02c488413a2eefe87739005a3",
+    "bytes": 1471264,
+    "source": "https://www.cdc.gov/physicalactivity/videos/Superman_Ipod-Lg.mp4",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Superman.webm",
+    "license": "Public domain (source declaration)",
+    "processing": "Time excerpt, single-view crop where specified, resize, Russian captions burned into added upper band (clear of player controls), original audio omitted. No speed change or repeated motion."
+  }
+}
