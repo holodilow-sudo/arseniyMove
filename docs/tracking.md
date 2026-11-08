@@ -111,16 +111,18 @@ For a repetition:
 
 Separate entry/exit thresholds provide hysteresis. Push-ups require elbow extension/flexion plus shoulder and hip descent; stationary wrists/ankles provide the reference. Squats require knee extension/flexion and hip descent, with a stable ankle reference. Pull-ups require both elbow angles, shoulder and hip rise, roughly upright torso, and fixed raised wrist locations. Large inter-frame jumps, changed supports, missing joints or frame gaps cancel incomplete cycles. Starting at the bent endpoint or making partial movements does not count.
 
-Push-ups and squats allow a small fixed margin for estimated joint-angle noise:
+Push-ups now allow more estimated-angle error; squats use tighter endpoints, as requested after phone use:
 
 | Estimated angle gate | Previous | Current |
 |---|---:|---:|
-| Push-up extended elbow | ≥158° | ≥155° |
-| Push-up bent elbow | ≤105° | ≤110° |
-| Squat extended knee | ≥158° | ≥155° |
-| Squat bent knee | ≤112° | ≤117° |
+| Push-up extended elbow | ≥155° | ≥150° |
+| Push-up bent elbow | ≤110° | ≤115° |
+| Squat extended knee | ≥155° | ≥158° |
+| Squat bent knee | ≤117° | ≤112° |
 
-These are recognition thresholds, not exercise technique targets. The 3° extension allowance and 5° flexion allowance do not lower body-travel, support, visibility or duration requirements. The departure gate remains below 146° and return-from-bottom gate above 119°. A squat's intermediate angle must be above 117° so the newly accepted bottom cannot also act as transit. For both exercises, an intermediate sample must show at least 6° of flexion relative to the recorded starting angle; simply holding or jumping between the relaxed endpoints is not sufficient. Pull-up and plank thresholds are unchanged.
+These are recognition thresholds, not exercise technique targets. Body-travel, support, visibility and duration requirements remain unchanged. The departure gate remains below 146° and the return-from-bottom gate above 119°. Intermediate samples must be above the exercise's bottom threshold (115° for push-ups, 112° for squats), so a held bottom cannot substitute for transit. An intermediate sample also needs at least 6° of flexion relative to the recorded starting angle. A complete return is still required, and endpoint jumps and shaking do not count. Other exercise thresholds are unchanged.
+
+Synthetic regressions cover the newly accepted push-up endpoints (153° top / 114° bottom) and newly rejected squat endpoints (156° top or 116° bottom), in both image and world coordinates at 4 and 8 fps. They check algorithm behaviour, not physical-phone accuracy.
 
 Departure timing uses the immediately preceding fresh transit sample when available; a long wait in the ready position is not included in the movement duration. Push-ups and plank measure body height above the projected wrist/ankle or elbow/ankle support line, allowing perspective to place the hands and feet at different image heights. Body-line, body-travel and support checks still apply.
 
